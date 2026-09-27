@@ -108,7 +108,7 @@ export const metadata: Metadata = {
     "application de productivité",
   ],
   verification: {
-    google: "4839dTLhK3YmqiQddjWRbRmo5p_cDlWp5rgZ6vnK3SE",
+    google: "yguX-gtZmVQQVDdHjvByusOifCxVgIBqWeyHLpmKWLQ",
   },
   authors: [{ name: "Donewell Team" }],
   creator: "Donewell",
