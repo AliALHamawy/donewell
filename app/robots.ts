@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 
 export default function robots(): MetadataRoute.Robots {
-    const baseUrl = "https://donewell.vercel.app"; // 👈 دومين موقعك
+    const baseUrl = "https://donewell-task.vercel.app"; // 👈 دومين موقعك
 
     return {
         rules: {

@@ -3,9 +3,10 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { ThemeProvider } from "@/components/myComponents/ThemeProvider";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toast";
+import { Providers } from "@/store/Providers";
 
 export const viewport: Viewport = {
-  themeColor: "#090d16", // طابق هذا اللون مع لون خلفية الـ Theme لديك
+  themeColor: "#090d16",
   width: "device-width",
   initialScale: 1,
   maximumScale: 1,
@@ -22,7 +23,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://donewell.vercel.app"), // 👈 استبدله بالدومين الخاص بك لاحقاً
+  metadataBase: new URL("https://donewell-task.vercel.app"),
   title: {
     default: "Donewell — Minimalist Task Management & Focus Workspace",
     template: "%s | Donewell",
@@ -34,6 +35,7 @@ export const metadata: Metadata = {
     "donewell",
     "donewell app",
     "donewell task manager",
+    "donewell notes app",
 
     // 📝 Notes & Task Keywords (English)
     "note taking app",
@@ -46,6 +48,8 @@ export const metadata: Metadata = {
     "personal organizer",
     "checklist app",
     "task tracker",
+    "notes and reminders",
+    "notes app for productivity",
 
     // 🚀 Productivity & Workflow Keywords
     "productivity app",
@@ -57,7 +61,7 @@ export const metadata: Metadata = {
     "realtime sync app",
 
     // 💻 Tech Stack Specific
-    "pocketbase todo",
+    "supabase todo & notes app",
     "nextjs task manager",
     "shadcn task app",
 
@@ -75,6 +79,33 @@ export const metadata: Metadata = {
     "تطبيق تو دو ليست",
     "تطبيق مفكرة شخصية",
     "دون ويل",
+    // 🇪🇸 Spanish Keywords (Notas y Tareas)
+    "aplicación de notas",
+    "tomar notas rápidamente",
+    "gestor de tareas",
+    "lista de tareas",
+    "notas y tareas",
+    "notas minimalistas",
+    "planificador diario",
+    "organizador personal",
+    "aplicación de lista de verificación",
+    "rastreador de tareas",
+    "notas y recordatorios",
+    "aplicación de productividad",
+
+    // 🇫🇷 French Keywords (Notes et Tâches)
+    "application de prise de notes",
+    "notes rapides",
+    "gestionnaire de tâches",
+    "liste de tâches",
+    "notes et tâches",
+    "notes minimalistes",
+    "planificateur quotidien",
+    "organisateur personnel",
+    "application de liste de contrôle",
+    "suivi des tâches",
+    "notes et rappels",
+    "application de productivité",
   ],
   authors: [{ name: "Donewell Team" }],
   creator: "Donewell",
@@ -110,10 +141,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
+        <Providers>
         <ThemeProvider>
           {children}
           <Toaster />
         </ThemeProvider>
+        </Providers>
       </body>
     </html>
   );

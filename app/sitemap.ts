@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://donewell.vercel.app"; // 👈 دومين موقعك
+  const baseUrl = "https://donewell-task.vercel.app"; // 👈 دومين موقعك
 
   return [
     {

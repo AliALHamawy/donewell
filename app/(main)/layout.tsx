@@ -5,7 +5,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <AuthGuard>
       <Navbar />
-      <div className="w-full h-[61px]"></div>
+      <div className="w-full h-15.25"/>
       {children}
     </AuthGuard>
   );
