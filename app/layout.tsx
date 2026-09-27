@@ -107,6 +107,9 @@ export const metadata: Metadata = {
     "notes et rappels",
     "application de productivité",
   ],
+  verification: {
+    google: "4839dTLhK3YmqiQddjWRbRmo5p_cDlWp5rgZ6vnK3SE",
+  },
   authors: [{ name: "Donewell Team" }],
   creator: "Donewell",
   publisher: "Donewell",
