@@ -19,7 +19,7 @@ export default async function Home({ searchParams }: PageProps) {
     <>
     <ClientProviders initialView={currentView}>
 
-      <div className="max-w-3xl w-full m-auto flex flex-col items-start justify-center gap-8 p-3">
+      <div className="max-w-4xl w-full m-auto flex flex-col items-start justify-center gap-8 p-3">
         <Toggler />
         <WorkspaceView />
       </div>
