@@ -11,7 +11,7 @@ interface ClientProvidersProps {
 }
 
 export const ClientProviders = ({ children, initialView }: ClientProvidersProps) => {
-    const isInitialized = useRef(false);
+    const isInitialized = useRef<boolean>(false);
 
     if (!isInitialized.current) {
         store.dispatch(setInitialView(initialView));

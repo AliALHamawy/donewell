@@ -3,7 +3,7 @@ import NoteCard from "./NoteCard";
 interface NotesProps {
     notes: any[];
     onDelete: (id: string) => Promise<void>;
-    onNoteUpdated?: () => void; // إضافة خاصية التحديث
+    onNoteUpdated?: (updatedNote?: any) => void; // إضافة خاصية التحديث
 }
 
 const Notes = ({ notes, onDelete, onNoteUpdated }: NotesProps) => {

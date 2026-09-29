@@ -10,11 +10,13 @@ import {
     DialogClose
 } from "@/components/ui/dialog";
 import AddNoteDialog from "./AddNoteDialog"; // تأكد من مطابقة المسار الصحيح لملف نافذة الإضافة/التعديل
+import NoteInfo from "./NoteInfo";
 
 const NoteCard = ({ note, onDelete, onNoteUpdated }: { note: any; onDelete?: (id: string) => Promise<void>; onNoteUpdated?: () => void }) => {
     const [openDelete, setOpenDelete] = useState<boolean>(false);
     const [isDeleting, setIsDeleting] = useState<boolean>(false);
     const [openEdit, setOpenEdit] = useState<boolean>(false);
+    const [openView, setOpenView] = useState<boolean>(false);
 
     const formattedDate = new Date(note.created_at).toLocaleDateString();
 
@@ -25,6 +27,7 @@ const NoteCard = ({ note, onDelete, onNoteUpdated }: { note: any; onDelete?: (id
                 await onDelete(note.id);
             }
             setOpenDelete(false);
+            setOpenView(false);
         } catch (error) {
             console.error("Error deleting note:", error);
         } finally {
@@ -37,10 +40,11 @@ const NoteCard = ({ note, onDelete, onNoteUpdated }: { note: any; onDelete?: (id
             <article
                 role="button"
                 className="group flex cursor-pointer flex-col rounded-xl border border-border bg-card p-5 shadow-[var(--shadow-panel)] transition-all hover:-translate-y-0.5 hover:border-primary/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                onClick={() => setOpenView(true)}
             >
-                <h2 className="truncate font-display text-lg font-semibold text-foreground">
+                <h3 className="truncate font-display text-lg font-semibold text-foreground">
                     {note.title || "No Title"}
-                </h2>
+                </h3>
                 <p className="mt-2 line-clamp-1 whitespace-pre-wrap break-words text-sm text-muted-foreground">
                     {note.content}
                 </p>
@@ -79,6 +83,20 @@ const NoteCard = ({ note, onDelete, onNoteUpdated }: { note: any; onDelete?: (id
                 onNoteAdded={onNoteUpdated}
             />
 
+            <NoteInfo
+                open={openView}
+                onOpenChange={setOpenView}
+                note={note}
+                onEdit={() => {
+                    setOpenView(false);
+                    // استخدام setTimeout بسيط جداً لمنع تداخل الحركات (Animations) الخاصة بالديالوج
+                    setTimeout(() => {
+                        setOpenEdit(true);
+                    }, 100);
+                }}
+                onDelete={() => setOpenDelete(true)}
+            />
+    
             {/* نافذة تأكيد الحذف */}
             <Dialog open={openDelete} onOpenChange={setOpenDelete}>
                 <DialogContent className="sm:max-w-[400px] border-border bg-card">

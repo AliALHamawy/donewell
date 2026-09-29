@@ -9,13 +9,13 @@ import {
     DialogClose
 } from "@/components/ui/dialog";
 import { Loader2 } from "lucide-react";
-import { createNote, updateNote } from "@/app/actions/notes"; // نفترض وجود دالة updateNote أو دمجها
+import { createNote, updateNote } from "@/app/actions/notes";
 
 interface AddNoteDialogProps {
     open: boolean;
     onOpenChange: (open: boolean) => void;
-    onNoteAdded?: () => void;
-    noteToEdit?: any; // الملاحظة المراد تعديلها (إن وجدت)
+    onNoteAdded?: (updatedNote?: any) => void;
+    noteToEdit?: any;
 }
 
 const AddNoteDialog = ({ open, onOpenChange, onNoteAdded, noteToEdit }: AddNoteDialogProps) => {
@@ -24,22 +24,25 @@ const AddNoteDialog = ({ open, onOpenChange, onNoteAdded, noteToEdit }: AddNoteD
     const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
 
-    // تعبئة الحقول تلقائياً في حال كنا نريد التعديل
+    // تعبئة الحقول فقط عند فتح النافذة بناءً على الملاحظة المراد تعديلها أو تركها فارغة للإضافة
     useEffect(() => {
-        if (noteToEdit) {
-            setTitle(noteToEdit.title || '');
-            setContent(noteToEdit.content || '');
-        } else {
-            setTitle('');
-            setContent('');
+        if (open) {
+            if (noteToEdit) {
+                setTitle(noteToEdit.title || '');
+                setContent(noteToEdit.content || '');
+            } else {
+                setTitle('');
+                setContent('');
+            }
+            setError(null);
         }
-    }, [noteToEdit, open]);
+    }, [open, noteToEdit]);
 
     const handleOpenChange = (isOpen: boolean) => {
+        // إذا أردت تفريغ الحقول فقط عند الإغلاق التام للنافذة
         if (!isOpen) {
-            setTitle('');
-            setContent('');
             setError(null);
+            // ملاحظة: لا نفرغ title و content هنا فجأة لكي لا نحذف بيانات المستخدم إذا حصل رندر مفاجئ
         }
         onOpenChange(isOpen);
     };
@@ -54,10 +57,8 @@ const AddNoteDialog = ({ open, onOpenChange, onNoteAdded, noteToEdit }: AddNoteD
 
         let result;
         if (noteToEdit) {
-            // تنفيذ التعديل إذا كانت الملاحظة موجودة
-            // result = await updateNote(noteToEdit.id, formData);
+            result = await updateNote(noteToEdit.id, formData);
         } else {
-            // تنفيذ الإضافة
             result = await createNote(formData);
         }
 
@@ -98,10 +99,10 @@ const AddNoteDialog = ({ open, onOpenChange, onNoteAdded, noteToEdit }: AddNoteD
                     {/* حقل المحتوى */}
                     <textarea
                         placeholder="Write your note..."
-                        rows={6} // يمكنك زيادة عدد الأسطر قليلاً إن أردت مساحة أوسع
+                        rows={6}
                         value={content}
                         onChange={(e) => setContent(e.target.value)}
-                        className="w-full rounded-md border border-emerald-500/50 bg-background px-3 py-2 text-sm focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500 text-foreground placeholder:text-muted-foreground resize-none scrollbar-thin scrollbar-thumb-emerald-500/30 scrollbar-track-transparent hover:scrollbar-thumb-emerald-500/50"
+                        className="w-full rounded-md border border-emerald-500/50 bg-background px-3 py-2 text-sm focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500 text-foreground placeholder:text-muted-foreground resize-none"
                     />
 
                     {/* الأزرار */}
