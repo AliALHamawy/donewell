@@ -94,8 +94,8 @@ const AuthCard = () => {
 
                 toast.add({
                     type: "success",
-                    title: "Check your inbox!",
-                    description: "We've sent a verification link to your email. Please confirm it before signing in.",
+                    title: "Welcome back!",
+                    description: "Successfully signed in.",
                 });
 
                 router.push("/");
@@ -108,21 +108,14 @@ const AuthCard = () => {
 
                 if (signUpError) throw signUpError;
 
-                // 🔑 تسجيل الدخول تلقائياً فور إنشاء الحساب بنجاح
-                const { error: signInError } = await supabase.auth.signInWithPassword({
-                    email,
-                    password,
-                });
-
-                if (signInError) throw signInError;
-
                 toast.add({
                     type: "success",
                     title: "Account created!",
-                    description: "Your workspace is ready.",
+                    description: "Please check your email to verify your account.",
                 });
 
-                router.push("/"); // التوجيه الفوري للصفحة الرئيسية
+                // التوجيه إلى صفحة التحقق مع تمرير البريد الإلكتروني
+                router.push(`/emailverification?email=${encodeURIComponent(email)}`);
             }
         } catch (err: any) {
             console.error("Auth Error:", err);

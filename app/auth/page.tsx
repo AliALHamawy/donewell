@@ -8,7 +8,7 @@ const page = () => {
       <div className="flex max-w-6xl w-full m-auto">
         {/* left */}
         <div className="hidden sm:flex max-w-6/10 w-full flex-col items-start gap-4">
-          <Logo icoClass="size-11" textClass="text-xl" />
+          <Logo icoClass="size-11 p-1 flex " textClass="text-xl" />
           <AuthHeading />
           <div className="flex gap-8 text-sm text-muted-foreground" >
             <span data-tsd-source="/src/components/auth-page.tsx:54:13">
