@@ -2,12 +2,13 @@
 
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 import Logo from '@/components/myComponents/Logo';
 import { MailOpen, Loader2 } from 'lucide-react';
 import { supabase } from "@/lib/supabaseClient";
 import { toast } from "@/components/ui/toast";
 
-const EmailVerification = () => {
+const EmailVerificationContent = () => {
   const searchParams = useSearchParams();
   const email = searchParams.get("email") || "";
   const [resending, setResending] = useState(false);
@@ -82,6 +83,20 @@ const EmailVerification = () => {
         </div>
       </div>
     </div>
+  );
+};
+
+const EmailVerification = () => {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex min-h-screen items-center justify-center px-4">
+          <Loader2 className="size-6 animate-spin text-primary" aria-label="Loading" />
+        </div>
+      }
+    >
+      <EmailVerificationContent />
+    </Suspense>
   );
 };
 
